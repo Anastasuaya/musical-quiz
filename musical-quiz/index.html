@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>musical-quiz</title>
+  </head>
+  <body>
+    <div id="app">
+      <label class="theme-toggle">
+
+        <input type="checkbox" id="theme-checkbox">
+
+        <div class="toggle-slot">
+          <img src="src/assets/sun.svg" class="sun" alt="light theme">
+          <div class="toggle-button"></div>
+          <img src="src/assets/moon.svg" class="moon" alt="dark theme">
+        </div>
+
+      </label>
+      <div id="start-screen">        
+        <h1>Музыкальный квиз</h1>
+        <img src="src/assets/record.png" class="record">
+        <button id="button" class="btn">Начать</button>
+      </div>
+      <div id="quiz-screen" class="hidden">
+        <h2 id="question">Текст вопроса</h2>
+        <div id="options">
+
+        </div>
+      </div>
+      <div id="result-screen" class="hidden">
+        <h2>Держи плейлист под вайбик!</h2>
+        <p id="result-text">Описание атмосферы</p>
+        <a id="result-link" href="#" target="_blank" class="playlist-btn">Слушать на яме</a>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+
+  </body>
+</html>
