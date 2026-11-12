@@ -1,0 +1,212 @@
+@font-face {
+  font-family: 'MyFont'; /* Задаем имя, по которому будем вызывать шрифт в CSS */
+  
+  /* Указываем точный путь к вашему файлу шрифта */
+  src: url('./fonts/MotivationOfHearts.ttf') format('truetype'); 
+  
+  font-weight: 400; /* 400 — это обычный (Regular) вес */
+  font-style: normal;
+  font-display: swap; /* Чтобы текст не пропадал, пока грузится шрифт */
+}
+
+
+:root {
+  --text: #000;
+  --text-h: #000;
+  --bg: #fff;
+  --border: #9C618E;
+  --accent: #FC98E4;
+
+  --toggle-bg: #FC98E4;
+  --toggle-btn: #9C618E; 
+
+
+  body.dark-theme {
+  --bg: #3A3A3A;
+  --text: #ffffff;  
+  --text-h: #ffffff;
+  --accent: #FC98E4;
+  
+  --toggle-bg: #FC98E4;
+  --toggle-btn: #9C618E;
+
+}
+  --sans: 'MyFont', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: 'MyFont', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono:  'MyFont', ui-monospace, Consolas, monospace;
+}
+
+
+/* ==========================================================================
+   2. БАЗОВЫЕ СТИЛИ СТРАНИЦЫ
+   ========================================================================== */
+
+body {
+  font-family: var(--sans);
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  /* Плавный переход при смене темы для фона и текста */
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+/* Центрируем наш квиз на экране */
+#app {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+font-size: 82px;
+letter-spacing: 5px;
+}
+h2 {
+  font-size: 50px;
+  letter-spacing: 5px;
+}
+p {
+  font-size: 36px;
+  letter-spacing: 5px;
+}
+/* Настраиваем кнопку "Начать" */
+.btn {
+  font-family: var(--sans);
+  width: 250px;
+  background-color: var(--accent);
+  color: var(--text);
+  border: none;
+  padding: 12px 24px;
+  font-size: 38px;
+  letter-spacing: 3px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  
+}
+
+/* ==========================================================================
+   3. СТИЛИ ДЛЯ ПЕРЕКЛЮЧАТЕЛЯ ТЕМЫ (ВАША КНОПКА)
+   ========================================================================== */
+
+/* Полностью прячем стандартный чекбокс */
+#theme-checkbox {
+  display: none;
+}
+
+/* Сам контейнер-овальная кнопка */
+.toggle-slot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80px;
+  height: 38px;
+  background-color: var(--toggle-bg);
+  border-radius: 30px;
+  padding: 0 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.3s;
+}
+
+/* Ваши SVG-иконки солнца и луны из папки assets */
+.sun, .moon {
+  width: 22px;
+  height: 22px;
+  z-index: 2;           /* Картинки поверх бегающего кружка */
+  user-select: none;
+  pointer-events: none; /* Чтобы клик регистрировался на самой кнопке */
+}
+
+/* Бегающий круглый переключатель внутри */
+.toggle-button {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  width: 43px;
+  height: 37px;
+  background-color: var(--toggle-btn);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Плавная анимация движения кружка */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+}
+
+/* МАГИЯ: Когда чекбокс активен, сдвигаем кружок вправо к луне */
+#theme-checkbox:checked + .toggle-slot .toggle-button {
+  transform: translateX(38px); 
+}
+
+/* 1. Базовое состояние пластинки */
+.record {
+  width: 300px;
+  height: auto;
+  margin: 30px auto;
+  display: block;
+  transform-origin: center;
+  /* Плавный поворот за 0.6 секунды */
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 2. МАГИЯ: Поворот пластинки при наведении на кнопку */
+/* Читается так: если внутри #app навели мышку на button (:hover), 
+   то найди внутри этого же #app элемент .record-img и поверни его */
+#app:has(button:hover) .record {
+  transform: rotate(180deg);
+}
+
+/* Класс для скрытия элементов */
+.hidden {
+  display: none !important;
+}
+
+/* Контейнер для кнопок вариантов ответов */
+#options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Стили для кнопок-вариантов */
+.option-btn {
+  background-color: var(--toggle-bg);
+  color: var(--text-color);
+  border: 2px solid transparent;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-btn:hover {
+  border-color: var(--border);
+  opacity: 0.9;
+}
+
+/* Кнопка ссылки на плейлист */
+.playlist-btn {
+  display: inline-block;
+  background-color: var(--accent); /* Зеленый под Spotify/Музыку */
+  /* color: white; */
+  text-decoration: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: transform 0.2s;
+  font-size: 30px;
+  letter-spacing: 4px;
+}
+.playlist-btn:hover {
+  transform: scale(1.05);
+}
